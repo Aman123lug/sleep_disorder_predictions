@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/old%20work/sleep_disorder_prediction/mlruns/0/2cb7b1652195405d9c70c7cb6b3bf46b/artifacts
+end_time: 1692955010881
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2cb7b1652195405d9c70c7cb6b3bf46b
+run_name: legendary-carp-408
+run_uuid: 2cb7b1652195405d9c70c7cb6b3bf46b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1692955003631
+status: 3
+tags: []
+user_id: ak064

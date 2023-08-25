@@ -1,0 +1,12 @@
+[2023-08-25 13:56:59,115 - INFO - utils - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.]
+[2023-08-25 13:56:59,121 - INFO - utils - NumExpr defaulting to 8 threads.]
+[2023-08-25 13:57:02,291 - INFO - train -  >>>> stage Training <<<< started !]
+[2023-08-25 13:57:02,535 - ERROR - train - 'str' object has no attribute 'items']
+Traceback (most recent call last):
+  File "d:\old work\sleep_disorder_prediction\src\train.py", line 68, in <module>
+    obj3.training(preprocess_path)
+  File "d:\old work\sleep_disorder_prediction\src\train.py", line 38, in training
+    mlflow.log_metrics("training Score", training_accuracy)
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\mlflow\tracking\fluent.py", line 677, in log_metrics
+    metrics_arr = [Metric(key, value, timestamp, step or 0) for key, value in metrics.items()]
+AttributeError: 'str' object has no attribute 'items'

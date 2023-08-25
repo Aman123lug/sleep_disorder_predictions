@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/old%20work/sleep_disorder_prediction/mlruns/0/36b8a024befb44ac898ce5e01dc2a0da/artifacts
+end_time: 1692952355512
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 36b8a024befb44ac898ce5e01dc2a0da
+run_name: skittish-hound-521
+run_uuid: 36b8a024befb44ac898ce5e01dc2a0da
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1692952348744
+status: 3
+tags: []
+user_id: ak064

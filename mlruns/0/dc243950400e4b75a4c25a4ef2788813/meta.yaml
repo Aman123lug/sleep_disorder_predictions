@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/old%20work/sleep_disorder_prediction/mlruns/0/dc243950400e4b75a4c25a4ef2788813/artifacts
+end_time: 1692955507984
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: dc243950400e4b75a4c25a4ef2788813
+run_name: flawless-pug-665
+run_uuid: dc243950400e4b75a4c25a4ef2788813
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1692955500697
+status: 3
+tags: []
+user_id: ak064

@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/old%20work/sleep_disorder_prediction/mlruns/0/f36a40edbf4c47fcaec43710eefa3aad/artifacts
+end_time: 1692952022531
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f36a40edbf4c47fcaec43710eefa3aad
+run_name: selective-fish-826
+run_uuid: f36a40edbf4c47fcaec43710eefa3aad
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1692952022446
+status: 4
+tags: []
+user_id: ak064

@@ -1,0 +1,26 @@
+[2023-08-25 14:54:57,346 - INFO - utils - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.]
+[2023-08-25 14:54:57,347 - INFO - utils - NumExpr defaulting to 8 threads.]
+[2023-08-25 14:55:00,540 - INFO - train -  >>>> stage Training <<<< started !]
+[2023-08-25 14:55:10,427 - ERROR - train - [Errno 2] No such file or directory: 'images/confusion_matrix.png']
+Traceback (most recent call last):
+  File "d:\old work\sleep_disorder_prediction\src\train.py", line 77, in <module>
+    obj3.training(preprocess_path)
+  File "d:\old work\sleep_disorder_prediction\src\train.py", line 67, in training
+    cm.figure_.savefig('images/confusion_matrix.png')
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\matplotlib\figure.py", line 3285, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\matplotlib\backend_bases.py", line 2338, in print_figure
+    result = print_method(
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\matplotlib\backend_bases.py", line 2204, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\matplotlib\_api\deprecation.py", line 410, in wrapper
+    return func(*inner_args, **inner_kwargs)
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\matplotlib\backends\backend_agg.py", line 517, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\matplotlib\backends\backend_agg.py", line 464, in _print_pil
+    mpl.image.imsave(
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\matplotlib\image.py", line 1667, in imsave
+    image.save(fname, **pil_kwargs)
+  File "C:\Users\ak064\AppData\Local\Programs\Python\Python310\lib\site-packages\PIL\Image.py", line 2428, in save
+    fp = builtins.open(filename, "w+b")
+FileNotFoundError: [Errno 2] No such file or directory: 'images/confusion_matrix.png'

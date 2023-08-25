@@ -1,0 +1,133 @@
+# PIPELINE DEFINITION
+# Name: sleep-disorder-prediction-by-krisharyan
+# Description: Sleep Disorder prediction
+components:
+  comp-data-preprocessing:
+    executorLabel: exec-data-preprocessing
+  comp-get-data:
+    executorLabel: exec-get-data
+  comp-training:
+    executorLabel: exec-training
+deploymentSpec:
+  executors:
+    exec-data-preprocessing:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - data_preprocessing
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet     --no-warn-script-location 'kfp==2.0.1'\
+          \ && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          python3 -m kfp.components.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef data_preprocessing():    \n    # Defining component configuration\n\
+          \    data_preprocessing = kfp.dsl.ContainerOp(\n        name='Data-preprocessing',\n\
+          \        image='docker.io/aman123lug/sleep-disorder',\n        command=['python',\
+          \ 'src/preprocess.py'],\n        )\n    return data_preprocessing\n\n"
+        image: python:3.7
+    exec-get-data:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - get_data
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet     --no-warn-script-location 'kfp==2.0.1'\
+          \ && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          python3 -m kfp.components.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef get_data():\n    getdata_component = kfp.dsl.ContainerOp(\n \
+          \       name='Data-Preparation',\n        image='docker.io/aman123lug/sleep-disorder',\n\
+          \        command=['python', 'src/dataIngestion.py'],\n        )\n    return\
+          \ getdata_component\n\n"
+        image: python:3.7
+    exec-training:
+      container:
+        args:
+        - --executor_input
+        - '{{$}}'
+        - --function_to_execute
+        - training
+        command:
+        - sh
+        - -c
+        - "\nif ! [ -x \"$(command -v pip)\" ]; then\n    python3 -m ensurepip ||\
+          \ python3 -m ensurepip --user || apt-get install python3-pip\nfi\n\nPIP_DISABLE_PIP_VERSION_CHECK=1\
+          \ python3 -m pip install --quiet     --no-warn-script-location 'kfp==2.0.1'\
+          \ && \"$0\" \"$@\"\n"
+        - sh
+        - -ec
+        - 'program_path=$(mktemp -d)
+
+          printf "%s" "$0" > "$program_path/ephemeral_component.py"
+
+          python3 -m kfp.components.executor_main                         --component_module_path                         "$program_path/ephemeral_component.py"                         "$@"
+
+          '
+        - "\nimport kfp\nfrom kfp import dsl\nfrom kfp.dsl import *\nfrom typing import\
+          \ *\n\ndef training():\n    # Defining component configuration\n    training_component\
+          \ = kfp.dsl.ContainerOp(\n        name='training',\n        image='docker.io/aman123lug/sleep-disorder',\n\
+          \        command=['python', 'src/train.py'],\n        # file_outputs={'mlpipeline-ui-metadata':'/mlpipeline-ui-metadata.json',\
+          \ \"mlpipeline-metrics\":'/mlpipeline-metrics.json'}\n        )\n\n    return\
+          \ training_component\n\n"
+        image: python:3.7
+pipelineInfo:
+  description: Sleep Disorder prediction
+  name: sleep-disorder-prediction-by-krisharyan
+root:
+  dag:
+    tasks:
+      data-preprocessing:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-data-preprocessing
+        dependentTasks:
+        - get-data
+        taskInfo:
+          name: data-preprocessing
+      get-data:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-get-data
+        taskInfo:
+          name: get-data
+      training:
+        cachingOptions:
+          enableCache: true
+        componentRef:
+          name: comp-training
+        dependentTasks:
+        - data-preprocessing
+        taskInfo:
+          name: training
+schemaVersion: 2.1.0
+sdkVersion: kfp-2.0.1
