@@ -69,7 +69,7 @@ class Training:
         
         
 if __name__ == "__main__":
-    preprocess_path ="data\preprocess_data.csv"
+    preprocess_path ="data/preprocess_data.csv"
     
     try:
         logger.info(f" >>>> stage {STAGE_NAME} <<<< started !")
