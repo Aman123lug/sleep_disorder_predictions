@@ -1,5 +1,5 @@
 import pandas as pd
-from src.loggerr import logger
+from loggerr import logger
 
 STAGE_NAME  = "Data Ingestion Stage"
 
