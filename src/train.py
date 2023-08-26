@@ -55,7 +55,7 @@ class Training:
             else:
                 mlflow.sklearn.log_model(dtree, "model", signature=signature)
             
-        with open("metrics.json", "w+") as f:
+        with open("metrics.txt", "w+") as f:
             f.write(str(test_accracy))
             
         # save model

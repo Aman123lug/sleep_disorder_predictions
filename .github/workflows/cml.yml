@@ -14,8 +14,9 @@ jobs:
           python src/train.py
 
           # Create CML report
-          cat metrics.json >> README.md
-          echo '![](images/confusion_matrix.png "Confusion Matrix")' >> README.md
+          echo "## Model Score" >> README.md
+          cat metrics.txt >> README.md
+          cml-publish images/confusion_matrix.png --md >> README.md
         #   cml comment create report.md
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
