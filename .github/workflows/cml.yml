@@ -14,7 +14,7 @@ jobs:
           python src/train.py
 
           # Create CML report
-          echo "## Model Score" >> README.md
+          echo "### Model Score" >> README.md
           cat metrics.txt >> README.md
           cml-publish images/confusion_matrix.png --md >> README.md
         #   cml comment create report.md
