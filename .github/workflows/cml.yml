@@ -15,7 +15,7 @@ jobs:
 
           # Create CML report
           cat metrics.json >> README.md
-          echo '![](./images/confusion_matrix "Confusion Matrix")' >> README.md
+          echo '![](images/confusion_matrix.png "Confusion Matrix")' >> README.md
         #   cml comment create report.md
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
