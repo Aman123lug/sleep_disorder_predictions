@@ -1,20 +1,18 @@
+
 name: MLOps-Pipeline-Started!
-on: 
+on:
   push:
     branches:
       - main
 jobs:
   train-and-report:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
-          
       - name: Model Training
         env:
           REPO_TOKEN: ${{ secrets.PAT }}
@@ -22,19 +20,25 @@ jobs:
           python src/dataIngestion.py  
           python src/preprocess.py
           python src/train.py
-  
+
           echo "### Model Score" >> README.md
           echo metrics.txt >> README.md
           cml comment images/confusion_matrix.png --md >> README.md
-        
         continue-on-error: true
-        
       - name: Docker Image Build
-        run: |
-          # echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36" --password-stdin
+        run: >
+          # echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36"
+          --password-stdin # password not working
           docker login -u "krisharyan36" --password "hellokrish1234"
           docker image build -t sdp:latest .
           docker tag sdp:latest krisharyan36/sdp:latest
-
-          docker image ls
+          #docker image ls
           docker push krisharyan36/sdp:latest
+          
+      - name: Deploying latest sdp in k8s
+        run: |
+          echo "$KUBE_CONFIG" > kube-config
+          kubectl --kubeconfig=kube-config apply -f deployment.yaml
+        env: 
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        
