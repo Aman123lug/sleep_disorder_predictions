@@ -34,4 +34,5 @@ jobs:
           # echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36" --password-stdin
           docker login -u "krisharyan36" --password "hellokrish1234"
           docker image build -t krish:latest .
+          docker image ls
           # docker push krish:latest
