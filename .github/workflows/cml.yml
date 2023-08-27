@@ -32,4 +32,4 @@ jobs:
           script: |
               pwd
               ls -lrth
-              kubectl replace --force -f /root/mlops/deployement.yaml 
+              kubectl replace --force -f /root/mlops/deployment.yaml 
