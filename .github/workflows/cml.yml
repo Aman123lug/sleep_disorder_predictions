@@ -13,7 +13,7 @@ jobs:
       - run: |
           pip install -r requirements.txt
 
-          python src/dataIngestion.py  # generate plot.png
+          python src/dataIngestion.py  
           python src/preprocess.py
           python src/train.py
 
