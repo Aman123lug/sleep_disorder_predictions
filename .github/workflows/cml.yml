@@ -30,6 +30,6 @@ jobs:
           username: ${{ secrets.K3_SERVER_USERNAME }}
           password: ${{ secrets.K3_SSH_PASSWORD }}
           script: |
-              hostname -i
+              pwd
               date
               kubectl replace --force -f ~/mlops/deployement.yaml 
