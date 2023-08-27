@@ -1,5 +1,8 @@
 name: MLOps-Pipeline-Started!
-on: [push]
+on: 
+  push:
+    branches:
+      - main
 jobs:
   train-and-report:
     runs-on: ubuntu-latest
