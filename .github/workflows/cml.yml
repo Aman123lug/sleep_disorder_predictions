@@ -27,7 +27,7 @@ jobs:
           cml comment images/confusion_matrix.png --md >> README.md
         
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_TOKEN: ${{ secrets.PAT }}
     
       - name: Docker Image Build
         run: |
