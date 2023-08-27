@@ -9,6 +9,28 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Model Training
+        env:
+          REPO_TOKEN: ${{ secrets.PAT }}
+        run: |
+          python src/dataIngestion.py  
+          python src/preprocess.py
+          python src/train.py
+
+          echo "### Model Score" >> README.md
+          echo metrics.txt >> README.md
+          cml comment images/confusion_matrix.png --md >> README.md
+        continue-on-error: true
+      - name: Docker Image Build
+        run: |
+          echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36" --password-stdin 
+          docker image build -t sdp:latest . 
+          docker tag sdp:latest krisharyan36/sdp:latest 
+          #docker image ls 
+          docker push krisharyan36/sdp:latest
 
       - name: Install OpenVPN
         run: |
@@ -20,7 +42,7 @@ jobs:
           config_file: .github/workflows/client.ovpn
           username: ${{ secrets.OVPN_USERNAME }}
           password: ${{ secrets.OVPN_PASSWORD }}
-      - name: Use SSH
+      - name: Deploying SDP app in K8s Clusters
         uses: appleboy/ssh-action@master
         with: 
           proxy_host: ${{ secrets.SERVER_HOST }}
