@@ -26,6 +26,9 @@ class Datapreprocess:
         data["BMI Category"] = label_encoder.fit_transform(data["BMI Category"])
         data["Sleep Disorder"] = label_encoder.fit_transform(data["Sleep Disorder"])
         
+        st = StandardScaler()
+        df["Daily Steps"] = st.fit_transform(df[["Daily Steps"]])
+        
         preprocess_data = data
         path = "data/preprocess_data.csv"
         preprocess_data.to_csv("data/preprocess_data.csv")
@@ -40,6 +43,7 @@ if __name__ == "__main__":
         logger.info(f" >>>> stage {STAGE_NAME} <<<< started !")
         obj = Datapreprocess()
         preprocess_data = obj.preprocess_data(df)
+        
         logger.info(f" >>>> stage {STAGE_NAME} <<<< Completed ! \n\n x==================x")
         
     except Exception as e:

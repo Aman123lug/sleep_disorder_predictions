@@ -2,6 +2,7 @@ import streamlit as st
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import pandas as pd
 import pickle
+import numpy as np
 
 stn = StandardScaler()
 label_encoder = LabelEncoder()
@@ -18,24 +19,26 @@ stress_level = st.number_input("enter your Stress level")
 bmi = st.number_input("enter your BMI category")
 blood_presure = st.number_input("enter your Blood presure")
 heart_rate = st.number_input("enter your heart rate")
-daily_steps = st.number_input("enter your daily steps")
+daily_steps = int(st.number_input("enter your daily steps"))
 systolic_bp = st.number_input("enter your Systolic BP")
 diastolic_bp = st.number_input("enter your Diastolic_BP")
 
+print(type(daily_steps))
 # scaling part
-daily_steps = stn.fit_transform(daily_steps)
+daily_steps = stn.fit_transform([[daily_steps]])
 
 # encoder 
-gender = label_encoder.fit_transform(gender)
-occupation = label_encoder.fit_transform(occupation)
-bmi = label_encoder.fit_transform(bmi)
+gender = label_encoder.fit_transform([gender])
+occupation = label_encoder.fit_transform([occupation])
+bmi = label_encoder.fit_transform([bmi])
 
+final_input = np.array([gender, age, occupation, sleep_duration, quality_sleep, physical_level, stress_level, bmi,blood_presure, heart_rate, systolic_bp, diastolic_bp], dtype=object).reshape(1,12)
 
-final_input = [gender, age, occupation, sleep_duration, quality_sleep, physical_level, stress_level, bmi, blood_presure, heart_rate, systolic_bp, diastolic_bp]
-
-button = st.button("Predict")
+button = st.button("Predict") 
 if button:
-    model = pickle.load("model/model.pkl")
+    with open("model/model.pkl", "rb") as f:
+        model = pickle.load(f)
+    # model = pickle.loads(open("model.pkl", "rb"))
     sleep_disorder = model.predict(final_input)
     if sleep_disorder == 0:
         st.write("You are healty")
@@ -44,5 +47,4 @@ if button:
         st.write("Sleep Apnea")
 
     else:
-        st.write("Insomnia")    
-    
+        st.write("Insomnia")

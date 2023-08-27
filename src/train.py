@@ -19,8 +19,8 @@ class Training:
         pass
     def training(self, path:Path):
         preprocess_data = pd.read_csv(path)
+        preprocess_data.drop("Unnamed: 0", axis=1, inplace=True)
         X_train, X_test, y_train, y_test = train_test_split(preprocess_data.drop('Sleep Disorder',axis=1), preprocess_data['Sleep Disorder'], test_size=0.2, random_state=42)
-
         with mlflow.start_run():
             dtree = DecisionTreeClassifier(max_depth=3)
             

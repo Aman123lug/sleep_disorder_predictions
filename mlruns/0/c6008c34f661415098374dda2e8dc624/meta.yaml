@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/old%20work/sleep_disorder_prediction/mlruns/0/c6008c34f661415098374dda2e8dc624/artifacts
+end_time: 1693114905647
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c6008c34f661415098374dda2e8dc624
+run_name: bright-loon-405
+run_uuid: c6008c34f661415098374dda2e8dc624
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1693114898689
+status: 3
+tags: []
+user_id: ak064
