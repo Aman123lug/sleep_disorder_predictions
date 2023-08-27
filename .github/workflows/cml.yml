@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
+      - name: Training Model
       - uses: actions/checkout@v3
       - run: |
           pip install -r requirements.txt
@@ -18,8 +19,14 @@ jobs:
 
           # Create CML report
           echo "### Model Score" >> README.md
-          cat metrics.txt >> README.md
+          echo metrics.txt >> README.md
           cml comment images/confusion_matrix.png --md >> README.md
-        #   cml comment create report.md
+        
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+      - name: Docker Image Build
+        run: |
+          echo "${{ secrets.DOCKERPW }}" | docker login -u "${{secrets.DOCKERUSERNAME}}" --password-stdin
+          docker image build -t argocd:latest .
+          docker push argocd:latest
