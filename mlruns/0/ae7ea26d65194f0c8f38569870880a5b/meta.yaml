@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/old%20work/sleep_disorder_prediction/mlruns/0/ae7ea26d65194f0c8f38569870880a5b/artifacts
+end_time: 1693173658378
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ae7ea26d65194f0c8f38569870880a5b
+run_name: enthused-ant-742
+run_uuid: ae7ea26d65194f0c8f38569870880a5b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1693173650161
+status: 3
+tags: []
+user_id: ak064

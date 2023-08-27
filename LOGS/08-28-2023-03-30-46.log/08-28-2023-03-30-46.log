@@ -1,0 +1,6 @@
+[2023-08-28 03:30:47,679 - INFO - utils - Note: NumExpr detected 12 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.]
+[2023-08-28 03:30:47,679 - INFO - utils - NumExpr defaulting to 8 threads.]
+[2023-08-28 03:30:50,055 - INFO - train -  >>>> stage Training <<<< started !]
+[2023-08-28 03:30:59,622 - INFO - train -  >>>> stage Training <<<< Completed ! 
+
+ x==================x]
