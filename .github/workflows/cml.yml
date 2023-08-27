@@ -31,5 +31,5 @@ jobs:
           password: ${{ secrets.K3_SSH_PASSWORD }}
           script: |
               pwd
-              date
-              kubectl replace --force -f ~/mlops/deployement.yaml 
+              ls -lrth
+              kubectl replace --force -f /root/mlops/deployement.yaml 
