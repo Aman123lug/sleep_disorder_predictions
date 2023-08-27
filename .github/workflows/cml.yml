@@ -54,4 +54,5 @@ jobs:
           script: |
               pwd
               ls -lrth
-              kubectl replace --force -f /root/mlops/deployment.yaml 
+              kubectl delete deploy sdp-app -n mlops
+              kubectl  apply -f /root/mlops/deployment.yaml 
