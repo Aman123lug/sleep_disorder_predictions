@@ -25,20 +25,27 @@ jobs:
           cml comment images/confusion_matrix.png --md >> README.md
         continue-on-error: true
       - name: Docker Image Build
-        run: >
-          echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36"
-          --password-stdin # docker login -u "krisharyan36" --password
-          "hellokrish1234" docker image build -t sdp:latest . docker tag
-          sdp:latest krisharyan36/sdp:latest #docker image ls docker push
-          krisharyan36/sdp:latest
+        run: |
+          echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36" --password-stdin 
+          docker image build -t sdp:latest . 
+          docker tag sdp:latest krisharyan36/sdp:latest 
+          #docker image ls 
+          docker push krisharyan36/sdp:latest
 
-        - name: Install OpenVPN
-          run: |
+      - name: Install OpenVPN
+        run: |
             sudo apt update
             sudo apt install -y openvpn openvpn-systemd-resolved
-        - name: Connect to VPN
-          uses: kota65535/github-openvpn-connect-action@v2
-          with:
-            config_file: .github/workflows/client.ovpn
-            username: ${{ secrets.OVPN_USERNAME }}
+      - name: Connect to VPN
+        uses: kota65535/github-openvpn-connect-action@v2
+        with:
+          config_file: .github/workflows/client.ovpn
+          username: ${{ secrets.OVPN_USERNAME }}
             password: ${{ secrets.OVPN_PASSWORD }}
+            
+      - name: Deploying latest sdp in k8s
+        run: |
+          echo "$KUBE_CONFIG" > kube-config
+          kubectl --kubeconfig=kube-config apply -f ~/mlops/deployment.yaml
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
