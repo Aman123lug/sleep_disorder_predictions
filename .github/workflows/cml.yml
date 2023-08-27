@@ -33,6 +33,8 @@ jobs:
         run: |
           # echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36" --password-stdin
           docker login -u "krisharyan36" --password "hellokrish1234"
-          docker image build -t krish:latest .
+          docker image build -t sdp:latest .
+          docker tag sdp:latest krisharyan36/sdp:latest
+
           docker image ls
-          # docker push krish:latest
+          docker push krisharyan36/sdp:latest
