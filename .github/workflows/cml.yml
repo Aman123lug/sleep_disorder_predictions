@@ -48,7 +48,5 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-      - name: Deploy kubernete
-        run:  |
-           sshmlops
-           kubectl  apply -f ~/mlops/deployment.yaml
+          script: |
+              kamlops
