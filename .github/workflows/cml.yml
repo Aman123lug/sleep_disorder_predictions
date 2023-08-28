@@ -27,7 +27,7 @@ jobs:
 
           echo "### Model Score" >> README.md
           echo metrics.txt >> README.md
-          cml comment images/confusion_matrix.png --md >> README.md
+          
         continue-on-error: true
 
   Docker-Automation:
