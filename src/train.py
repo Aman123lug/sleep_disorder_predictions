@@ -67,8 +67,8 @@ class Training:
         # save model
             pickle.dump(dtree, open(r"model/model.pkl", "wb"))
             logger.info(f" model saved !")
-            # IC = type('IdentityClassifier', (), {"predict": lambda i : i, "_estimator_type": "classifier"})
-            # cm=ConfusionMatrixDisplay.from_estimator(IC, y_pred, y_test, normalize='true',  values_format='.2%')
+            IC = type('IdentityClassifier', (), {"predict": lambda i : i, "_estimator_type": "classifier"})
+            cm=ConfusionMatrixDisplay.from_estimator(IC, y_pred, y_test, normalize='true',  values_format='.2%')
     
             cm.figure_.savefig('images/confusion_matrix.png')
 
