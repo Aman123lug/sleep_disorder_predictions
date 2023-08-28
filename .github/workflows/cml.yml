@@ -20,7 +20,8 @@ jobs:
           pip install -r requirements.txt
       
       - name: Model Training
-        env: "${{ secrets.REPO_PAT }}"
+        env: 
+          REPO_TOKEN: ${{ secrets.REPO_PAT }}
         run: |
           python src/dataIngestion.py  
           python src/preprocess.py
