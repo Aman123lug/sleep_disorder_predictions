@@ -1,32 +1,58 @@
 name: MLOps-Pipeline-Started!
-on: 
+on:
   push:
     branches:
       - main
 jobs:
   train-and-report:
     runs-on: ubuntu-latest
-    container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
-      - name: Training Model
-      - uses: actions/checkout@v3
-      - run: |
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: |
           pip install -r requirements.txt
-
-          python src/dataIngestion.py  # generate plot.png
+      - name: Model Training
+        env:
+          REPO_TOKEN: ${{ secrets.PAT }}
+        run: |
+          python src/dataIngestion.py  
           python src/preprocess.py
           python src/train.py
 
-          # Create CML report
           echo "### Model Score" >> README.md
           echo metrics.txt >> README.md
           cml comment images/confusion_matrix.png --md >> README.md
-        
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+        continue-on-error: true
       - name: Docker Image Build
         run: |
-          echo "${{ secrets.DOCKERPW }}" | docker login -u "${{secrets.DOCKERUSERNAME}}" --password-stdin
-          docker image build -t argocd:latest .
-          docker push argocd:latest
+          echo "${{ secrets.DOCKERPW }}" | docker login -u "krisharyan36" --password-stdin 
+          docker image build -t sdp:latest . 
+          docker tag sdp:latest krisharyan36/sdp:latest 
+          #docker image ls 
+          docker push krisharyan36/sdp:latest
+
+      - name: Install OpenVPN
+        run: |
+            sudo apt update
+            sudo apt install -y openvpn openvpn-systemd-resolved
+      - name: Connect to VPN
+        uses: kota65535/github-openvpn-connect-action@v2
+        with:
+          config_file: .github/workflows/client.ovpn
+          username: ${{ secrets.OVPN_USERNAME }}
+          password: ${{ secrets.OVPN_PASSWORD }}
+      - name: Deploying SDP app in K8s Clusters
+        uses: appleboy/ssh-action@master
+        with: 
+          proxy_host: ${{ secrets.SERVER_HOST }}
+          proxy_username: ${{ secrets.SERVER_USERNAME }}
+          proxy_password: ${{ secrets.SSH_PASSWORD }}
+          host: ${{ secrets.K3_SERVER_HOST }}
+          username: ${{ secrets.K3_SERVER_USERNAME }}
+          password: ${{ secrets.K3_SSH_PASSWORD }}
+          script: |
+              pwd
+              ls -lrth
+              kubectl delete deploy sdp-app -n mlops
+              kubectl  apply -f /root/mlops/deployment.yaml 

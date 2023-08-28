@@ -30,6 +30,7 @@ class Datapreprocess:
         df["Daily Steps"] = st.fit_transform(df[["Daily Steps"]])
         
         preprocess_data = data
+        print(len(preprocess_data.columns))
         path = "data/preprocess_data.csv"
         preprocess_data.to_csv("data/preprocess_data.csv")
         
