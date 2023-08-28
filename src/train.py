@@ -55,10 +55,10 @@ class Training:
                 # please refer to the doc for more information:
                 # https://mlflow.org/docs/latest/model-registry.html#api-workflow
                 mlflow.sklearn.log_model(
-                    dtree, "model", registered_model_name="DecisionTree", signature=signature
+                    dtree, "model/model.pkl", registered_model_name="DecisionTree", signature=signature
                 )
             else:
-                mlflow.sklearn.log_model(dtree, "model", signature=signature)
+                mlflow.sklearn.log_model(dtree, "model/model.pkl", signature=signature)
             
         with open("metrics.txt", "w+") as f:
             f.write(str(test_accracy))
