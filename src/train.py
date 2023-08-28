@@ -49,28 +49,28 @@ class Training:
             logger.info(f" MLflow log_metric saved !")
 
             # Model registry does not work with file store
-            if tracking_url_type_store != "file":
-                # Register the model
-                # There are other ways to use the Model Registry, which depends on the use case,
-                # please refer to the doc for more information:
-                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                mlflow.sklearn.log_model(
-                    dtree, "model/model.pkl", registered_model_name="DecisionTree", signature=signature
-                )
-            else:
-                mlflow.sklearn.log_model(dtree, "model/model.pkl", signature=signature)
+            # if tracking_url_type_store != "file":
+            #     # Register the model
+            #     # There are other ways to use the Model Registry, which depends on the use case,
+            #     # please refer to the doc for more information:
+            #     # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+            #     mlflow.sklearn.log_model(
+            #         dtree, r"model/model.pkl", registered_model_name="DecisionTree", signature=signature
+            #     )
+            # else:
+            #     mlflow.sklearn.log_model(dtree, r"model/model.pkl", signature=signature)
             
-        with open("metrics.txt", "w+") as f:
-            f.write(str(test_accracy))
-            logger.info(f" metrics saved !")
+            with open("metrics.txt", "w+") as f:
+                f.write(str(test_accracy))
+                logger.info(f" metrics saved !")
             
         # save model
-        pickle.dump(dtree, open(r"model/model.pkl", "wb"))
-        logger.info(f" mode saved !")
-        IC = type('IdentityClassifier', (), {"predict": lambda i : i, "_estimator_type": "classifier"})
-        cm=ConfusionMatrixDisplay.from_estimator(IC, y_pred, y_test, normalize='true',  values_format='.2%')
-
-        cm.figure_.savefig('images/confusion_matrix.png')
+            pickle.dump(dtree, open(r"model/model.pkl", "wb"))
+            logger.info(f" model saved !")
+            # IC = type('IdentityClassifier', (), {"predict": lambda i : i, "_estimator_type": "classifier"})
+            # cm=ConfusionMatrixDisplay.from_estimator(IC, y_pred, y_test, normalize='true',  values_format='.2%')
+    
+            cm.figure_.savefig('images/confusion_matrix.png')
 
         
         
