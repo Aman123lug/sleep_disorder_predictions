@@ -38,6 +38,7 @@ class Training:
             
             report = classification_report(y_test, y_pred)
             print("classification report:", report)
+            logger.info(f" training successfull !")
             
             mlflow.log_metric("training Score", training_accuracy)
             mlflow.log_metric("test accuracy", test_accracy)
@@ -60,10 +61,11 @@ class Training:
             
         with open("metrics.txt", "w+") as f:
             f.write(str(test_accracy))
+            logger.info(f" metrics saved !")
             
         # save model
-        pickle.dump(dtree, open("model/model.pkl", "wb"))
-        
+        pickle.dump(dtree, open(r"model/model.pkl", "wb"))
+        logger.info(f" mode saved !")
         IC = type('IdentityClassifier', (), {"predict": lambda i : i, "_estimator_type": "classifier"})
         cm=ConfusionMatrixDisplay.from_estimator(IC, y_pred, y_test, normalize='true',  values_format='.2%')
 
@@ -72,7 +74,7 @@ class Training:
         
         
 if __name__ == "__main__":
-    preprocess_path ="data/preprocess_data.csv"
+    preprocess_path =r"data/preprocess_data.csv"
     
     try:
         logger.info(f" >>>> stage {STAGE_NAME} <<<< started !")
