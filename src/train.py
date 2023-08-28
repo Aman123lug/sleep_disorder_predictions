@@ -46,6 +46,7 @@ class Training:
 
             signature = infer_signature(X_train, y_pred)
             tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+            logger.info(f" MLflow log_metric saved !")
 
             # Model registry does not work with file store
             if tracking_url_type_store != "file":
