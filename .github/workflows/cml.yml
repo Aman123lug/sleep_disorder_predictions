@@ -12,19 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       
-      - name: Checkout Output Repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
-        with:
-          repository: kreatewebsite/kreate_output
-          token: ${{ secrets.REPO_PAT }}
-          ref: main
           
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
+      
       - name: Model Training
-        env:
-          REPO_TOKEN: ${{ secrets.PAT }}
         run: |
           python src/dataIngestion.py  
           python src/preprocess.py
